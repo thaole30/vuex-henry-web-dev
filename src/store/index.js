@@ -9,10 +9,10 @@ if (process.env.NODE_ENV === "development") {
 const storeData = {
   state: {
     todos: [
-      { id: 1, title: "job1", completed: false },
+      { id: 1, title: "job1", completed: true },
       { id: 2, title: "job2", completed: true },
-      { id: 3, title: "job3", completed: true },
-      { id: 4, title: "job4", completed: false },
+      { id: 3, title: "job3", completed: false },
+      { id: 4, title: "job4", completed: true },
     ],
     auth: {
       isAuthenticated: true,
@@ -20,6 +20,11 @@ const storeData = {
   },
   getters: {
     doneTodos: (state) => state.todos.filter((item) => item.completed),
+    progress: (state, getters) => {
+      //   const doneTodos = state.todos.filter((item) => item.completed);
+      const doneTodos = getters.doneTodos;
+      return Math.round((doneTodos.length / state.todos.length) * 100);
+    },
   },
 };
 

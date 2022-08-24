@@ -10,19 +10,20 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 // import { mapState } from "vuex";
 export default {
   name: "StatusBar",
   //   computed: mapState(["todos", "auth"]),
-  computed: {
-    doneTodos() {
-      console.log(
-        "done",
-        this.$store.state.todos.filter((item) => item.completed)
-      );
-      return this.$store.state.todos.filter((item) => item.completed);
-    },
-  },
+
+  //   computed: {
+  //     doneTodos() {
+  //       return this.$store.getters.doneTodos;
+  //     },
+  //   },
+
+  computed: mapGetters(["doneTodos"]),
 };
 </script>
 

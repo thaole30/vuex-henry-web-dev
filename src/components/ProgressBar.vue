@@ -5,17 +5,11 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Progressbar",
-  computed: {
-    progress() {
-      return Math.round(
-        (this.$store.state.todos.filter((item) => item.completed).length /
-          this.$store.state.todos.length) *
-          100
-      );
-    },
-  },
+  computed: mapGetters(["doneTodos", "progress"]),
 };
 </script>
 

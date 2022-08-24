@@ -28,6 +28,9 @@ import TodoForm from "./TodoForm.vue";
 // import store from "@/store/index.js";
 export default {
   name: "TodosList",
+  created() {
+    this.getTodos();
+  },
   data() {
     return {};
   },
@@ -42,7 +45,7 @@ export default {
     // handleDeleteTodo(todoId) {
     //   this.$store.dispatch("deleteTodo", todoId);
     // },
-    ...mapActions(["deleteTodo"]),
+    ...mapActions(["deleteTodo", "getTodos"]), //this.deleteTodo = this.$store.dispatch("deleteTodo", todoId) ; this.getTodos = this.$store.dispatch("getTodos")
   },
   components: { TodoForm },
 };

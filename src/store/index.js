@@ -1,3 +1,4 @@
+import axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
 
@@ -8,12 +9,7 @@ if (process.env.NODE_ENV === "development") {
 
 const storeData = {
   state: {
-    todos: [
-      { id: 1, title: "job1", completed: true },
-      { id: 2, title: "job2", completed: true },
-      { id: 3, title: "job3", completed: false },
-      { id: 4, title: "job4", completed: true },
-    ],
+    todos: [],
     auth: {
       isAuthenticated: false,
     },
@@ -43,15 +39,42 @@ const storeData = {
     ADD_TODO(state, newTodo) {
       state.todos.unshift(newTodo);
     },
+    SET_TODOS(state, todos) {
+      state.todos = todos;
+    },
   },
   actions: {
     //action dong bo
-    deleteTodo(context, todoId) {
+    async deleteTodo(context, todoId) {
       //call mutation
-      context.commit("DELETE_TODO", todoId);
+      try {
+        await axios.delete(
+          `https://jsonplaceholder.typicode.com/todos/${todoId}`
+        );
+        context.commit("DELETE_TODO", todoId);
+      } catch (error) {
+        console.log(error);
+      }
     },
-    addTodo({ commit }, newTodo) {
-      commit("ADD_TODO", newTodo);
+    async addTodo({ commit }, newTodo) {
+      try {
+        await axios.post("https://jsonplaceholder.typicode.com/todos", newTodo);
+        commit("ADD_TODO", newTodo);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    //call api getTodo
+    async getTodos({ commit }) {
+      try {
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/todos?_limit=5"
+        );
+        console.log("response", response);
+        commit("SET_TODOS", response.data);
+      } catch (error) {
+        console.log("error", error);
+      }
     },
   },
 };

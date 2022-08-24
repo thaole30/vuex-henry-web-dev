@@ -15,7 +15,7 @@ const storeData = {
       { id: 4, title: "job4", completed: true },
     ],
     auth: {
-      isAuthenticated: true,
+      isAuthenticated: false,
     },
   },
   getters: {
@@ -24,6 +24,17 @@ const storeData = {
       //   const doneTodos = state.todos.filter((item) => item.completed);
       const doneTodos = getters.doneTodos;
       return Math.round((doneTodos.length / state.todos.length) * 100);
+    },
+  },
+  mutations: {
+    TOGGLE_AUTH(state) {
+      state.auth.isAuthenticated = !state.auth.isAuthenticated;
+    },
+    TOGGLE_COMPLETE(state, todoId) {
+      state.todos.map((todo) => {
+        if (todo.id === todoId) todo.completed = !todo.completed;
+        return todo;
+      });
     },
   },
 };

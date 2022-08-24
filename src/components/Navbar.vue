@@ -6,16 +6,16 @@
       <li>About</li>
       <li v-if="auth.isAuthenticated">
         Total Todos: {{ todos.length }}
-        <button>Log out</button>
+        <button @click="TOGGLE_AUTH">Log out</button>
       </li>
-      <li v-else><button>Login</button></li>
+      <li v-else><button @click="TOGGLE_AUTH">Login</button></li>
     </ul>
   </div>
 </template>
 
 <script>
 // import store from '@/store/index.js';
-import { mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "Navbar",
@@ -25,6 +25,12 @@ export default {
   //     },
   //   },
   computed: mapState(["todos", "auth"]),
+  //   methods: {
+  //     toggleAuth() {
+  //       this.$store.commit("TOGGLE_AUTH");
+  //     },
+  //   },
+  methods: mapMutations(["TOGGLE_AUTH"]),
 };
 </script>
 

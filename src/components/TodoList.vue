@@ -2,8 +2,22 @@
   <div class="todo-list">
     <p style="color: red; background-color: yellow">My todolist</p>
     <ul v-if="auth.isAuthenticated">
-      <li v-for="todo in todos" :key="todo.id">
+      <li
+        v-for="todo in todos"
+        :key="todo.id"
+        :class="todo.completed ? 'completed' : ''"
+      >
         {{ todo.title }}
+        <!-- <input
+          type="checkbox"
+          :checked="todo.completed"
+          @change="toggleStatusTodo(todo.id)"
+        /> -->
+        <input
+          type="checkbox"
+          :checked="todo.completed"
+          @change="TOGGLE_COMPLETE(todo.id)"
+        />
       </li>
     </ul>
     <p v-else style="text-align: center; color: red">Not authenticated</p>
@@ -11,28 +25,20 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 // import store from "@/store/index.js";
 export default {
   name: "TodosList",
   data() {
     return {};
   },
-  // computed: {
-  //   todos() {
-  //     return this.$store.state.todos;
-  //   },
-  //   isAuthenticated() {
-  //     return this.$store.state.auth.isAuthenticated;
+  computed: mapState(["todos", "auth"]), //this.todos = this.$store.state.todos
+  // methods: {
+  //   toggleStatusTodo(todoId) {
+  //     this.$store.commit("TOGGLE_COMPLETE", todoId);
   //   },
   // },
-
-  // computed: mapState({
-  //   todos: (state) => state.todos,
-  //   isAuthenticated: (state) => state.auth.isAuthenticated,
-  // }),
-
-  computed: mapState(["todos", "auth"]), //this.todos = this.$store.state.todos
+  methods: mapMutations(["TOGGLE_COMPLETE"]),
 };
 </script>
 

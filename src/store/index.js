@@ -27,6 +27,7 @@ const storeData = {
     },
   },
   mutations: {
+    //DONG BO
     TOGGLE_AUTH(state) {
       state.auth.isAuthenticated = !state.auth.isAuthenticated;
     },
@@ -35,6 +36,22 @@ const storeData = {
         if (todo.id === todoId) todo.completed = !todo.completed;
         return todo;
       });
+    },
+    DELETE_TODO(state, todoId) {
+      state.todos = state.todos.filter((item) => item.id !== todoId);
+    },
+    ADD_TODO(state, newTodo) {
+      state.todos.unshift(newTodo);
+    },
+  },
+  actions: {
+    //action dong bo
+    deleteTodo(context, todoId) {
+      //call mutation
+      context.commit("DELETE_TODO", todoId);
+    },
+    addTodo({ commit }, newTodo) {
+      commit("ADD_TODO", newTodo);
     },
   },
 };

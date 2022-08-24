@@ -1,5 +1,6 @@
 <template>
   <div class="todo-list">
+    <TodoForm />
     <p style="color: red; background-color: yellow">My todolist</p>
     <ul v-if="auth.isAuthenticated">
       <li
@@ -8,16 +9,13 @@
         :class="todo.completed ? 'completed' : ''"
       >
         {{ todo.title }}
-        <!-- <input
-          type="checkbox"
-          :checked="todo.completed"
-          @change="toggleStatusTodo(todo.id)"
-        /> -->
         <input
           type="checkbox"
           :checked="todo.completed"
           @change="TOGGLE_COMPLETE(todo.id)"
         />
+        <!-- <button @click="handleDeleteTodo(todo.id)">Delete</button> -->
+        <button @click="deleteTodo(todo.id)">Delete</button>
       </li>
     </ul>
     <p v-else style="text-align: center; color: red">Not authenticated</p>
@@ -25,20 +23,28 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
+import TodoForm from "./TodoForm.vue";
 // import store from "@/store/index.js";
 export default {
   name: "TodosList",
   data() {
     return {};
   },
-  computed: mapState(["todos", "auth"]), //this.todos = this.$store.state.todos
+  computed: mapState(["todos", "auth"]),
   // methods: {
   //   toggleStatusTodo(todoId) {
   //     this.$store.commit("TOGGLE_COMPLETE", todoId);
   //   },
   // },
-  methods: mapMutations(["TOGGLE_COMPLETE"]),
+  methods: {
+    ...mapMutations(["TOGGLE_COMPLETE"]),
+    // handleDeleteTodo(todoId) {
+    //   this.$store.dispatch("deleteTodo", todoId);
+    // },
+    ...mapActions(["deleteTodo"]),
+  },
+  components: { TodoForm },
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="status-bar" v-if="this.$store.state.auth.isAuthenticated">
+  <div class="status-bar" v-if="auth.isAuthenticated">
     <p style="color: red; background-color: yellow">Done</p>
     <ul>
       <li v-for="todo in doneTodos" :key="todo.id">
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 // import { mapState } from "vuex";
 export default {
@@ -23,7 +23,10 @@ export default {
   //     },
   //   },
 
-  computed: mapGetters(["doneTodos"]),
+  computed: {
+    ...mapGetters(["doneTodos"]),
+    ...mapState(["auth"]),
+  },
 };
 </script>
 

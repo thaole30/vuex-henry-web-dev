@@ -2,7 +2,7 @@
   <div class="todo-list">
     <TodoForm />
     <p style="color: red; background-color: yellow">My todolist</p>
-    <ul v-if="auth.isAuthenticated">
+    <ul v-if="isAuthenticated">
       <li
         v-for="todo in todos"
         :key="todo.id"
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import TodoForm from "./TodoForm.vue";
 // import store from "@/store/index.js";
 export default {
@@ -34,7 +34,8 @@ export default {
   data() {
     return {};
   },
-  computed: mapState(["todos", "auth"]),
+  computed: { ...mapGetters(["isAuthenticated", "todos"]) },
+
   // methods: {
   //   toggleStatusTodo(todoId) {
   //     this.$store.commit("TOGGLE_COMPLETE", todoId);

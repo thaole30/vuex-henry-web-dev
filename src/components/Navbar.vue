@@ -1,10 +1,11 @@
 <template>
   <div class="navbar">
+    <h3>123</h3>
     <h1>My Vuex App Todos</h1>
     <ul>
       <li>Home</li>
       <li>About</li>
-      <li v-if="auth.isAuthenticated">
+      <li v-if="isAuthenticated">
         Total Todos: {{ todos.length }}
         <button @click="TOGGLE_AUTH">Log out</button>
       </li>
@@ -15,7 +16,7 @@
 
 <script>
 // import store from '@/store/index.js';
-import { mapMutations, mapState } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "Navbar",
@@ -24,7 +25,7 @@ export default {
   //       return this.$store.state.todos.length;
   //     },
   //   },
-  computed: mapState(["todos", "auth"]),
+  computed: mapGetters(["isAuthenticated", "todos"]),
   //   methods: {
   //     toggleAuth() {
   //       this.$store.commit("TOGGLE_AUTH");
